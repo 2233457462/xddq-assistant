@@ -20,6 +20,10 @@
             "_comment_ignoreTimeCheck": "福地忽略时间检测",
         },
         "_comment_rules": "福地规则 每个规则对应一个物品 minItemLv为最低品质 isCheck为是否开启检查",
+        "homeland": {
+            "ignoreTimeCheck": false,
+            "_comment_ignoreTimeCheck": "福地忽略时间检测"
+        },
         "switch": {
             "homeland": true,
             "_comment_homeland": "福地自动总开关",
@@ -35,6 +39,8 @@
             "_comment_invade": "[异兽入侵]开关",
             "invade_index": 2,
             "_comment_invade_index": "[异兽入侵]选择分身0,1,2",
+            "starTrial": true,
+            "_comment_starTrial": "[星宿试炼]开关",
             "pupil": true,
             "_comment_pupil": "[宗门] 自动训练, 出师.  用于宗门大比前一天 可以存一下 体力"
         },
@@ -83,7 +89,51 @@
                 "_comment_strictConditions": "元体: 反击&抗晕 阳神: 连爆&抗闪 阴身: 闪避&抗暴"
             }
         },
-
+        "talent": {
+            "showResult": true,
+            "_comment_showResult": "显示灵脉结果 防焦虑",
+            "separation": {
+                "quality": 5,
+                "_comment_quality": "最低品质",
+                "_comment_quality_dict": "1: 凡品 2: 下品 3: 中品 4: 上品 5: 极品 6: 仙品 7: 完美 8: 先天 9: 至宝",
+                "condition": [
+                    {
+                        "attribute": [
+                            4,
+                            14
+                        ],
+                        "skillId": [
+                            50006
+                        ],
+                        "priority": 0
+                    },
+                    {
+                        "attribute": [
+                            4,
+                            11,
+                            14
+                        ],
+                        "skillId": [
+                            50005
+                        ],
+                        "priority": 1
+                    },
+                    {
+                        "attribute": [
+                            4,
+                            11,
+                            12
+                        ],
+                        "skillId": [
+                            50004
+                        ],
+                        "priority": 2
+                    }
+                ],
+                "_comment_condition": "元体 击晕 阳神 连爆 阴身 闪避",
+                "_comment_condition_dict": "4: 敏捷 11: 抗击晕 12: 抗暴击 13: 抗连击 14: 抗闪避 15: 抗反击 16: 抗吸血 50001: 玄武, 50002: 白虎, 50003: 螣蛇, 50004: 勾陈, 50005: 青龙, 50006: 朱雀"
+            }
+        },
         "reconnectInterval": 300000,
         "_comment_reconnectInterval": "重连间隔 默认为60 * 1000 * 5 即5分钟"
     },

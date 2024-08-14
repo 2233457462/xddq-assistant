@@ -22,7 +22,10 @@ import ActivityMgr from "#game/mgr/ActivityMgr.js";
 import UnionMgr from "#game/mgr/UnionMgr.js";
 import HomelandMgr from "#game/mgr/HomelandMgr.js";
 import InvadeMgr from "#game/mgr/InvadeMgr.js";
+import StarTrialMgr from "#game/mgr/StarTrialMgr.js";
 import AdRewardMgr from "#game/mgr/AdRewardMgr.js";
+import RuleTrialMgr from "#game/mgr/RuleTrialMgr.js";
+import PetsMgr from "#game/mgr/PetsMgr.js";
 
 class MsgRecvMgr {
     constructor() {
@@ -86,6 +89,18 @@ class MsgRecvMgr {
     static SyncBagMsg(t) {
         logger.debug("[MsgRecvMgr] 背包数据同步");
         BagMgr.inst.SyncBagMsg(t);
+    }
+
+    // 621 同步灵脉数据
+    static TalentPlayerDataMsg(t) {
+        logger.debug("[MsgRecvMgr] 灵脉数据同步");
+        PlayerAttributeMgr.inst.handlerTalentInit(t);
+    }
+
+    // 625 获取未处理灵脉数据
+    static GetUnDealTalentMsgResp(t) {
+        logger.debug("[MsgRecvMgr] 获取未处理灵脉数据")
+        PlayerAttributeMgr.inst.handlerTalent(t);
     }
 
     // 651 游历数据同步
@@ -323,15 +338,42 @@ class MsgRecvMgr {
         HomelandMgr.inst.doExplore(t);
     }
 
-     // 1402 异兽入侵数据同步
+    // 1402 异兽入侵数据同步
     static InvadeDataMsg(t) {
         logger.debug("[MsgRecvMgr] 异兽入侵挑战");
         InvadeMgr.inst.InvadeDataMsg(t);
     }
+
+    // 1401 异兽入侵挑战结果
+
     static InvadeChallengeResp(t) {
         logger.debug("[MsgRecvMgr] 异兽入侵用户数据同步");
         InvadeMgr.inst.InvadeChallengeResp(t);
     }
+
+    //206901星宿试炼数据同步
+    static StarTrialDataMsg(t) {
+        logger.debug("[MsgRecvMgr] 星宿试炼数据同步");
+        StarTrialMgr.inst.SyncStarTrialData(t)
+    }
+
+    //9105 法则试练速战数据同步
+    static RuleTrialDataSync(t) {
+        logger.debug("[MsgRecvMgr] 法则试练速战数据同步");
+        RuleTrialMgr.inst.RuleTrialDataSync(t)
+    }
+
+    // 740 同步玩家灵兽数据
+    static PlayerPetDataSync(t) {
+        logger.debug("[MsgRecvMgr] 同步玩家灵兽数据");
+        PetsMgr.inst.SyncPlayerPetDataMsg(t.playerPetData);
+    }
+    //11706 抽取灵兽内丹结果同步
+    static PetKernelDrawResp(t) {
+        logger.debug("[MsgRecvMgr] 抽取灵兽内丹结果同步 ");
+        PetsMgr.inst.PetKernelDrawResp(t);
+    }
+
 // TODO: 以下代码未完成
 // import SystemUnlockMgr from "#game/mgr/SystemUnlockMgr.js";
 //     // 102 系统解锁同步
@@ -340,15 +382,7 @@ class MsgRecvMgr {
 //         SystemUnlockMgr.inst.SystemUnlockSync(t);
 //     }
 
-// import TalentMgr from "#game/mgr/TalentMgr.js";
-//     // 621 同步灵脉数据
-//     static TalentPlayerDataMsg(t) {
-//         logger.debug("[MsgRecvMgr] 灵脉数据同步");
-//         TalentMgr.inst.syncTalentPlayerDataMsg(t);
-//     }
-
 // TODO 以下暂时不想写
-
 
 // import CommonRedPacketMgr from "#game/mgr/CommonRedPacketMgr.js";
 //     // 140 红包状态同步 TODO 自动领取
@@ -388,13 +422,6 @@ class MsgRecvMgr {
 //         }
 //     }
 
-// import RemoteStarTrialMgr from "#game/mgr/RemoteStarTrialMgr.js";
-//     // 6901 星宿试炼数据同步
-//     static StarTrialDataMsg(t) {
-//         logger.debug("[MsgRecvMgr] 星宿试炼数据同步");
-//         RemoteStarTrialMgr.SyncData(t);
-//     }
-
 // import UniverseMgr from "#game/mgr/UniverseMgr.js";
 //     // static UniverseDataMsgSync(t) {
 //     //     logger.debug("[MsgRecvMgr] 小世界信息同步");
@@ -407,9 +434,6 @@ class MsgRecvMgr {
 //         logger.debug("[MsgRecvMgr] 天地法则数据同步");
 //         WorldRuleMgr.inst.syncWorldRulePlayerDataMsg(t);
 //     }
-
-
-
 }
 
 export default MsgRecvMgr;
